@@ -1,0 +1,42 @@
+{
+  "mcpServers": {
+    "pyghidra": {
+      "type": "stdio",
+      "command": "/Users/neverfade/MCP_intent/mcp-malware-analyzer/venv/bin/python",
+      "args": [
+        "-m",
+        "pyghidra_mcp"
+      ],
+      "env": {
+        "GHIDRA_INSTALL_DIR": "/Users/neverfade/ghidra_11.3.2_PUBLIC",
+        "JDK_JAVA_OPTIONS": "--enable-native-access=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED"
+        }
+    },
+    "capa-analyzer": {
+      "type": "stdio",
+      "command": "/Users/neverfade/MCP_intent/mcp_capa/venv/bin/python",
+      "args": [
+        "/Users/neverfade/MCP_intent/mcp_capa/server.py"
+      ],
+      "env": {}
+    },
+    "pyghidra-analyzer": {
+      "type": "stdio",
+      "command": "/Users/neverfade/MCP_intent/mcp_pyghidra/venv/bin/python",
+      "args": [
+        "/Users/neverfade/MCP_intent/mcp_pyghidra/server.py"
+      ],
+      "env": {
+        "GHIDRA_INSTALL_DIR": "/Users/neverfade/ghidra_11.3.2_PUBLIC"
+      }
+    },
+    "intent-analyzer": {
+      "type": "stdio",
+      "command": "/Users/neverfade/MCP_intent/mcp_intent_llm/venv/bin/python",
+      "args": [
+        "/Users/neverfade/MCP_intent/mcp_intent_llm/server.py"
+      ],
+      "env": {}
+    }
+  }
+}

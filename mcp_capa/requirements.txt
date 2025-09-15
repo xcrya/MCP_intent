@@ -1,0 +1,5 @@
+flare-capa>=7.4.0
+mcp>=1.0.0
+fastmcp>=0.3.0
+pydantic>=2.0.0
+click>=8.0.0
