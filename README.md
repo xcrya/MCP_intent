@@ -1,47 +1,62 @@
 # MCP Intent Analysis System
 
-의도 분석 MCP관련 정리... CAPA, Ghidra, LLM을 활용하여 바이너리 파일을 분석함.
-capa - pyghidra - llm 을 이어주는 다리(claude code) 구현 필요
+바이너리 파일의 의도를 자동으로 분석하는 MCP(Model Context Protocol) 기반 시스템입니다.
+CAPA, Ghidra, LLM(Claude)을 통합하여 바이너리 파일의 기능과 의도를 종합적으로 분석합니다.
+
+## 주요 기능
+
+### 1. CAPA 분석 (mcp_capa)
+- 바이너리 파일의 기능 분석
+- 위험도별 기능 분류 (High/Medium/Low Risk)
+- MITRE ATT&CK 매핑
+- 함수 주소 추출
+
+### 2. 의도 분석 (mcp_intent_llm)
+- CAPA 분석 결과 기반 의도 추론
+- 위협 수준 평가
+- 악성 행위 패턴 식별
+- 상세 분석 보고서 생성
+- AI 기반 심층 분석
+
+## 프로젝트 구조
+
+```
+MCP_intent/
+├── analyzed/           # 분석 결과 저장 디렉토리
+│   └── [세션명]/      # 각 분석 세션별 결과
+│       ├── CAPA_result.json
+│       └── intent_report.json
+├── binary/            # 분석 대상 바이너리 파일 저장
+├── mcp_capa/          # CAPA 분석 MCP 서버
+│   ├── requirements.txt
+│   └── server.py
+└── mcp_intent_llm/    # 의도 분석 MCP 서버
+    ├── requirements.txt
+    └── server.py
+
+```
 
 ## 시스템 요구사항
 
-### 1. CAPA (Capability Analysis)
-- **CAPA 도구 설치 필요**
-  - [CAPA 릴리즈 페이지](https://github.com/mandiant/capa/releases)에서 다운로드
-  - 또는 `pip install flare-capa>=7.4.0`로 설치
-- **CAPA Rules 및 Signatures**
-  - [capa-rules](https://github.com/mandiant/capa-rules) 클론 필요
-  - [capa-sigs](https://github.com/mandiant/capa-sigs) 클론 필요 (선택사항)
+### 1. CAPA 관련
+- CAPA 도구 (버전 7.4.0 이상)
+- CAPA Rules 및 Signatures 필요
+  - [capa-rules](https://github.com/mandiant/capa-rules)
+  - [capa-sigs](https://github.com/mandiant/capa-sigs)
 
-### 2. Ghidra
-- **Ghidra 설치 필요**
-  - [NSA Ghidra](https://github.com/NationalSecurityAgency/ghidra) 다운로드 및 설치
-  - Java 17+ 필요
-- **pyghidra 라이브러리**
-  - `pip install pyghidra` 설치 후 Ghidra 경로 설정 필요
-
-### 3. Python 환경
-- Python 3.10+ 필수
+### 2. Python 환경
+- Python 3.10 이상
+- 각 서버별 가상환경 권장
 
 ## 설치 방법
 
-### 1. 기본 환경 구성
+### 1. 저장소 클론
 ```bash
-# CAPA 설치
-pip install flare-capa>=7.4.0
-
-# CAPA Rules & Sigs 클론
-git clone https://github.com/mandiant/capa-rules.git
-git clone https://github.com/mandiant/capa-sigs.git
-
-# Ghidra 설치 및 pyghidra 설정
-pip install pyghidra
-# Ghidra 경로 설정 필요 (첫 실행 시 자동으로 안내)
+git clone https://github.com/xcrya/MCP_intent.git
+cd MCP_intent
 ```
 
-### 2. MCP 서버들 설치
-
-#### CAPA 분석 서버
+### 2. CAPA 분석 서버 설정
 ```bash
 cd mcp_capa
 python -m venv venv
@@ -49,7 +64,40 @@ source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-**requirements.txt (mcp_capa):**
+## 주요 분석 항목
+
+1. 위험도 평가
+   - Critical: 매우 높은 위험도, 즉각적인 조치 필요
+   - High: 높은 위험도, 주의 깊은 모니터링 필요
+   - Medium: 중간 위험도, 지속적인 관찰 필요
+   - Low: 낮은 위험도, 일반적인 주의 필요
+
+2. 의도 분석 카테고리
+   - data_theft: 데이터 탈취
+   - system_compromise: 시스템 장악
+   - persistence: 지속성 확보
+   - evasion: 탐지 회피
+   - reconnaissance: 정보 수집
+   - 기타 카테고리...
+
+3. 보안 분석 항목
+   - 주요 보안 우려사항
+   - 의심스러운 패턴
+   - 탐지 회피 기법
+   - 데이터 수집 기능
+
+## 라이선스
+MIT License
+```bash
+cd mcp_intent_llm
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+## 서버별 requirements.txt
+
+### mcp_capa/requirements.txt
 ```
 flare-capa>=7.4.0
 mcp>=1.0.0
@@ -58,46 +106,35 @@ pydantic>=2.0.0
 click>=8.0.0
 ```
 
-#### Ghidra 분석 서버
-```bash
-cd mcp_pyghidra
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-pip install pyghidra  # Ghidra 연동 필요
+### mcp_intent_llm/requirements.txt
 ```
-
-**requirements.txt (mcp_pyghidra):**
-```
-mcp>=1.0.0
-fastmcp>=0.3.0
-pydantic>=2.0.0
-click>=8.0.0
-httpx>=0.25.0
-pyghidra
-```
-
-#### 의도 분석 LLM 서버
-```bash
-cd mcp_intent_llm
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-```
-
-**requirements.txt (mcp_intent_llm):**
-```
-openai>=1.0.0
 anthropic>=0.25.0
 mcp>=1.0.0
 fastmcp>=0.3.0
 pydantic>=2.0.0
 click>=8.0.0
-langchain>=0.1.0
-llama-index>=0.10.0
 ```
 
-### 3. 서버 설정 파일 수정
+## 사용 방법
+
+1. CAPA 분석 서버 실행
+```bash
+cd mcp_capa
+source venv/bin/activate
+python server.py
+```
+
+2. 의도 분석 서버 실행
+```bash
+cd mcp_intent_llm
+source venv/bin/activate
+python server.py
+```
+
+3. 분석 결과 확인
+- 분석 결과는 `analyzed/[세션명]/` 디렉토리에 저장됨
+  - `CAPA_result.json`: CAPA 분석 결과
+  - `intent_report.json`: 의도 분석 결과 및 종합 보고서
 
 각 서버의 설정에서 다음 경로들을 실제 환경에 맞게 수정:
 
@@ -155,12 +192,12 @@ mcp__intent-analyzer__analyze_folder(base_session_name="batch1")
 analyzed/
 ├── session_name/
 │   ├── CAPA_result.json      # CAPA 분석 결과
-│   ├── pyghidra_result.json  # Ghidra 디컴파일 결과
+│   ├── pyghidra_result.json  # Ghidra 디컴파일 결과 (이후 기드라 연결 필요)
 │   └── intent_report.json    # 최종 의도 분석 보고서
 ```
 
 ## 문제 해결
 
 1. **CAPA "지원되지 않는 파일" 오류**: 파일 형식이 PE/ELF인지 확인
-2. **pyghidra 오류**: Ghidra 설치 및 경로 설정 확인
+2. **pyghidra 오류**: Ghidra 설치 및 !!경로 설정!! 확인
 3. **경로 오류**: server.py 파일들의 절대 경로 설정 확인
