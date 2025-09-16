@@ -42,7 +42,7 @@ MCP_intent/
 - CAPA 도구 (버전 7.4.0 이상)
 - CAPA Rules 및 Signatures 필요
   - [capa-rules](https://github.com/mandiant/capa-rules)
-  - [capa-sigs](https://github.com/mandiant/capa-sigs)
+  - [capa-sigs](https://github.com/mandiant/capa-sigs) # 현재 접속 불가
 
 ### 2. Python 환경
 - Python 3.10 이상
@@ -238,9 +238,6 @@ export ANTHROPIC_API_KEY="your-anthropic-key"
 # CAPA 분석
 mcp__capa-analyzer__analyze_single(binary_path="path/to/malware.exe", session_name="test1")
 
-# Ghidra 분석
-mcp__pyghidra-analyzer__analyze_single(session_name="test1", binary_path="path/to/malware.exe")
-
 # 의도 분석
 mcp__intent-analyzer__analyze_single(session_name="test1")
 ```
@@ -249,7 +246,6 @@ mcp__intent-analyzer__analyze_single(session_name="test1")
 ```python
 # 폴더 내 모든 실행파일 분석
 mcp__capa-analyzer__analyze_folder(folder_path="path/to/malware_folder", base_session_name="batch1")
-mcp__pyghidra-analyzer__analyze_folder(base_session_name="batch1", folder_path="path/to/malware_folder")
 mcp__intent-analyzer__analyze_folder(base_session_name="batch1")
 ```
 
