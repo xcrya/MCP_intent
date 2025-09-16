@@ -48,6 +48,62 @@ MCP_intent/
 - Python 3.10 이상
 - 각 서버별 가상환경 권장
 
+### 3. 운영체제별 주의사항
+#### Windows
+- 절대 경로 설정 시 백슬래시(`\`) 사용
+  ```python
+  # server.py의 경로 설정 예시
+  USER_PATH = Path("C:\\Users\\사용자이름")
+  BASE_DIR = USER_PATH / "MCP_intent"
+  ```
+- Python 가상환경 구조:
+  ```
+  venv/
+  ├── Scripts/       # 실행 파일 디렉토리
+  │   ├── python.exe
+  │   ├── pip.exe
+  │   └── activate.bat
+  ├── Lib/
+  └── Include/
+  ```
+- server.py 첫 줄 수정 (shebang 제거 또는 수정)
+  ```python
+  # Windows에서는 shebang 라인이 필요 없음
+  ```
+- 가상환경 활성화:
+  ```cmd
+  .\venv\Scripts\activate
+  ```
+- 터미널에서 한글 출력 시 인코딩 설정:
+  ```cmd
+  chcp 65001
+  ```
+
+#### macOS/Linux
+- 절대 경로 설정 시 슬래시(`/`) 사용
+  ```python
+  USER_PATH = Path("/Users/사용자이름")
+  BASE_DIR = USER_PATH / "MCP_intent"
+  ```
+- Python 가상환경 구조:
+  ```
+  venv/
+  ├── bin/           # 실행 파일 디렉토리
+  │   ├── python
+  │   ├── pip
+  │   └── activate
+  ├── lib/
+  └── include/
+  ```
+- server.py 첫 줄 예시:
+  ```python
+  #!/Users/사용자이름/MCP_intent/mcp_intent_llm/venv/bin/python
+  ```
+- 가상환경 활성화:
+  ```bash
+  source venv/bin/activate
+  ```
+
 ## 설치 방법
 
 ### 1. 저장소 클론
@@ -56,11 +112,30 @@ git clone https://github.com/xcrya/MCP_intent.git
 cd MCP_intent
 ```
 
-### 2. CAPA 분석 서버 설정
+### 2. 초기 설정
+1. 각 서버의 `server.py` 파일에서 경로 설정 수정
+   - Windows: `USER_PATH = Path("C:\\Users\\사용자이름")`
+   - macOS/Linux: `USER_PATH = Path("/Users/사용자이름")`
+
+2. 필요한 디렉토리 생성
+```bash
+mkdir -p binary analyzed
+```
+
+### 3. CAPA 분석 서버 설정
+#### Windows
+```cmd
+cd mcp_capa
+python -m venv venv
+.\venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+#### macOS/Linux
 ```bash
 cd mcp_capa
 python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
+source venv/bin/activate
 pip install -r requirements.txt
 ```
 
