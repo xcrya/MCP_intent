@@ -42,11 +42,7 @@ MCP_intent/
 - CAPA 도구 (버전 7.4.0 이상)
 - CAPA Rules 및 Signatures 필요
   - [capa-rules](https://github.com/mandiant/capa-rules)
-<<<<<<< HEAD
-  - [capa-sigs](https://github.com/mandiant/capa-sigs) # 현재 링크 접속x 
-=======
   - [capa-sigs](https://github.com/mandiant/capa-sigs) # 현재 접속 불가
->>>>>>> 3382073e (docs: README.md 업데이트)
 
 ### 2. Python 환경
 - Python 3.10 이상
