@@ -1,2 +1,16 @@
 .DS_Store
 .idea/
+
+# Virtual Environment
+**/venv/
+**/env/
+**/.env/
+
+# Python
+**/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# VS Code
+.vscode/

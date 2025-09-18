@@ -26,7 +26,7 @@ MCP_intent/
 │   └── [세션명]/      # 각 분석 세션별 결과
 │       ├── CAPA_result.json
 │       └── intent_report.json
-├── binary/            # 분석 대상 바이너리 파일 저장
+├── /home/ubuntu/malware-analyzer/watch-folder/  # 분석 대상 바이너리 파일 저장
 ├── mcp_capa/          # CAPA 분석 MCP 서버
 │   ├── requirements.txt
 │   └── server.py
@@ -42,7 +42,11 @@ MCP_intent/
 - CAPA 도구 (버전 7.4.0 이상)
 - CAPA Rules 및 Signatures 필요
   - [capa-rules](https://github.com/mandiant/capa-rules)
+<<<<<<< HEAD
+  - [capa-sigs](https://github.com/mandiant/capa-sigs) # 현재 링크 접속x 
+=======
   - [capa-sigs](https://github.com/mandiant/capa-sigs) # 현재 접속 불가
+>>>>>>> 3382073e (docs: README.md 업데이트)
 
 ### 2. Python 환경
 - Python 3.10 이상
